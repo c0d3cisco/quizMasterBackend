@@ -16,11 +16,18 @@ const trivia = io.of('/trivia');
 home.on('connection', (socket) => {
 
   console.log('sockets connected to HOME namespace', socket.id);
-  socket.on('chatMessage', (payload) =>{
-    // socket.emit('respond', 'back to you');
-    socket.broadcast.emit('respond', `${payload}`);
+
+  socket.on('chatMessage', (username, payload) =>{
+    console.log(payload);
+    socket.emit('responseBack', payload);
+    socket.broadcast.emit('responseOut', username, payload);
+    // socket.broadcast.emit('respond', `${payload}`);
   });
 
+  socket.on('validationTest', (payload) =>{
+    socket.emit('respond', 'back to you');
+    // socket.broadcast.emit('respond', `${payload}`);
+  });
 });
 
 
