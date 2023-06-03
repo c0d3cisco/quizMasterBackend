@@ -3,7 +3,6 @@
 // SERVER //
 require('dotenv').config({ path: '../.env'});
 const { Server } = require('socket.io');
-const Queue = require('./queue.js');
 const PORT = process.env.PORT || 3002;
 
 // combinations/initiations

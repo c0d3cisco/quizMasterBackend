@@ -1,6 +1,5 @@
 'use strict';
 // VENDOR //
-const handleOrder = require('./handler.js');
 const Chance = require('chance');
 const { io } = require('socket.io-client');
 const socket = io('http://localhost:3001/math');
@@ -8,7 +7,7 @@ const socket = io('http://localhost:3001/math');
 
 socket.on('connect', () => console.log('Vendor Link with Server: SUCCESSFUL'));
 
-socket.on('validationTest', (payload) =>{
+socket.on('respond', (payload) =>{
   console.log(payload);
 } );
 
