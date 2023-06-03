@@ -7,23 +7,61 @@ const PORT = process.env.PORT || 3002;
 
 // combinations/initiations
 const io = new Server();
+const home = io.of('/home');
 const math = io.of('/math');
+const trivia = io.of('/trivia');
 
 
-//create connection point for endpoint
-math.on('connection', (socket) => {
+//HOME PAGE
+home.on('connection', (socket) => {
 
-  console.log('sockets connected to cap namespace', socket.id);
-  socket.on('validationTest', (payload) =>{
-    socket.emit('respond', 'back to you');
-  } );
+  console.log('sockets connected to HOME namespace', socket.id);
+  socket.on('chatMessage', (payload) =>{
+    // socket.emit('respond', 'back to you');
+    socket.broadcast.emit('respond', `${payload}`);
+  });
 
-
-
-
-  
 });
 
 
+//MATH 
+math.on('connection', (socket) => {
+
+  console.log('sockets connected to MATH namespace', socket.id);
+  socket.on('validationTest', (payload) =>{
+    socket.emit('respond', 'back to you');
+  });
+
+
+});
+
+// TRIVIA ROOM
+trivia.on('connection', (socket) => {
+
+  console.log('sockets connected to TRIVIA namespace', socket.id);
+  socket.on('chatMessage', (payload) =>{
+    console.log(payload);
+    socket.emit('chatMessage', payload);
+  });
+
+});
+
+
+process.stdin.on('data', data => {
+  let enteredValue = data.toString().slice(0, -1);
+
+  if(enteredValue === 'logHome'){
+    console.log('***********home***********', home.sockets);
+  }
+
+  if(enteredValue === 'logMath'){
+    console.log('***********math***********', math.sockets);
+  }
+
+  if(enteredValue === 'logTrivia'){
+    console.log('***********trivia***********', trivia.sockets);
+  }
+
+});
 
 io.listen(PORT);
