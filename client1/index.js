@@ -11,8 +11,24 @@ process.stdin.on('data', (data) => {
     restartWithDifferentValue(enteredValue.slice(4));
   }
 
-  if(enteredValue.slice(0, 4) === 'chrm'){
+  if(enteredValue === 'clear'){
+    clearTerminal();
+  }
+
+  if(enteredValue === 'chrm'){
     process.exit();
+  }
+
+  if(enteredValue === 'help'){
+    console.log(`'chrm' - - - - - - - - - - -  Kills script to change rooms. `);
+    console.log(`'socket' * * * * * * * * * *  See your socket info`);
+    console.log(`'x-- <namespace>'  - - - - -  Namespaces: home, trivia, math.`);
+    console.log('                              to enter namespace after');
+    console.log('                              server initiation.');
+    console.log('                              CAUTION: space after dash is');
+    console.log('                              crucial.');
+    console.log(`'m, <message>' * * * * * * *  CHAT in after entering namespace.`);
+    console.log(`'rm- <roomName>' - - - - - -  RoomName of your choosing.`);
 
   }
   
@@ -20,7 +36,7 @@ process.stdin.on('data', (data) => {
 });
 // Call the restart function with a different value to initiate the restart
 
-console.log('Welcome to Quiz Master! Good luck in you endeavors!');
+console.log('Welcome to Quiz Master! Good luck in your endeavors!');
 
 function logNumbers() {
   let i = 3;
@@ -64,3 +80,7 @@ function clearLastLine() {
   process.stdout.write('\x1B[1A\x1B[2K');
 }
 
+
+// set up a way to adjust screen size
+
+// a way to limit room sizes

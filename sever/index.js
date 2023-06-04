@@ -10,7 +10,7 @@ const io = new Server();
 const home = io.of('/home');
 const math = io.of('/math');
 const trivia = io.of('/trivia');
-
+let maxInRoom = 2;
 
 //HOME PAGE
 home.on('connection', (socket) => {
@@ -34,9 +34,44 @@ home.on('connection', (socket) => {
 //MATH 
 math.on('connection', (socket) => {
 
+  socket.on('roomMessage', (username, message, savedRoom) => {
+    socket.emit('roomResponseBack', message);
+    socket.to(savedRoom).emit('roomResponseOut', username, message);
+  })
+
   console.log('sockets connected to MATH namespace', socket.id);
+
+  socket.on('leave-room', (room) => {
+    socket.leave(room);
+    console.log('these are the rooms', socket.adapter.rooms);
+  });
+
+  socket.on('join-room', (room) =>{
+
+
+    socket.join(room);
+
+    // logic to control size of room
+    if(math.adapter.rooms?.get(room)?.size > maxInRoom) {
+      socket.leave(room)
+      socket.emit('roomFull', room)
+    }
+
+    console.log('sockets connected to MATH namespace', socket.id);
+    console.log('these are the rooms', socket.adapter.rooms);
+
+  });
+  
+
   socket.on('validationTest', (payload) =>{
     socket.emit('respond', 'back to you');
+  });
+
+  socket.on('chatMessage', (username, payload) =>{
+    console.log(payload);
+    socket.emit('responseBack', payload);
+    socket.broadcast.emit('responseOut', username, payload);
+    // socket.broadcast.emit('respond', `${payload}`);
   });
 
 
@@ -46,6 +81,40 @@ math.on('connection', (socket) => {
 trivia.on('connection', (socket) => {
 
   console.log('sockets connected to TRIVIA namespace', socket.id);
+
+  socket.emit('leave-room', (room) => {
+    socket.join(room);
+  });
+
+  // socket.on('join-room', (room) =>{
+  //   if(room === 'duel') socket.join('math');
+  //   console.log(socket.id);
+  //   console.log('sockets connected to MATH namespace', socket.id);
+  //   console.log('these are the rooms', socket.adapter.rooms);
+
+  // });
+
+  socket.on('leave-room', (room) => {
+    socket.leave(room);
+    console.log('these are the rooms', socket.adapter.rooms);
+  });
+
+  socket.on('join-room', (room) =>{
+
+
+    socket.join(room);
+
+    // logic to control size of room
+    if(math.adapter.rooms?.get(room)?.size > maxInRoom) {
+      socket.leave(room)
+      socket.emit('roomFull', room)
+    }
+
+    console.log('sockets connected to MATH namespace', socket.id);
+    console.log('these are the rooms', socket.adapter.rooms);
+
+  });
+
   socket.on('chatMessage', (payload) =>{
     console.log(payload);
     socket.emit('chatMessage', payload);
@@ -54,6 +123,7 @@ trivia.on('connection', (socket) => {
 });
 
 
+// #AIprompted
 process.stdin.on('data', data => {
   let enteredValue = data.toString().slice(0, -1);
 
@@ -68,6 +138,8 @@ process.stdin.on('data', data => {
   if(enteredValue === 'logTrivia'){
     console.log('***********trivia***********', trivia.sockets);
   }
+
+  
 
 });
 
