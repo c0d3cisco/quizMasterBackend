@@ -48,7 +48,7 @@ function restartWithDifferentValue(newValue) {
   
   // Set the new value as an environment variable
   process.env.NEW_VALUE = newValue;
-  process.env.USERNAME = 'Cisco';
+  process.env.USERNAME = 'Kenya';
   
   // Restart the execution by calling the entry point file or re-executing the code
   require('./client.js');

@@ -30,7 +30,9 @@ process.stdin.on('data', (data) => {
   }
 
   if(enteredValue === 'home'){
-    // socket.disconnect();
+    socket.disconnect();
+    
+    socket = null;
     
     // Create a new socket with the new namespace
     socket = io('http://localhost:3001/home');
@@ -42,7 +44,7 @@ process.stdin.on('data', (data) => {
   }
 
   if(enteredValue === 'math'){
-    // socket.disconnect();
+    socket.disconnect();
     // Create a new socket with the new namespace
     socket = io('http://localhost:3001/math');
 
@@ -53,7 +55,7 @@ process.stdin.on('data', (data) => {
   }
 
   if(enteredValue === 'trivia'){
-    // socket.disconnect();
+    socket.disconnect();
     // Create a new socket with the new namespace
     socket = io('http://localhost:3001/trivia');
 
