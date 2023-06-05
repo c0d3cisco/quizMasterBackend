@@ -1,7 +1,10 @@
+const { Namespace } = require('socket.io');
 
 // console.clear();
 clearTerminal();
 // logNumbers();
+
+require('dotenv').config({ path: '../.env'});
 
 process.stdin.on('data', (data) => {
   let enteredValue = data.toString().slice(0, -1);
@@ -32,7 +35,6 @@ process.stdin.on('data', (data) => {
 
   }
   
-  
 });
 // Call the restart function with a different value to initiate the restart
 
@@ -59,12 +61,14 @@ function logNumbers() {
 console.log('Right-aligned text'.padStart(62));
 
 
-function restartWithDifferentValue(newValue) {
+function restartWithDifferentValue(namespace) {
   // Perform any cleanup or reset operations here
   
   // Set the new value as an environment variable
-  process.env.NEW_VALUE = newValue;
+  process.env.NAMESPACE = namespace;
   process.env.USERNAME = 'Cisco';
+  // process.env.PASSWORD = 
+
   
   // Restart the execution by calling the entry point file or re-executing the code
   require('./client.js');
