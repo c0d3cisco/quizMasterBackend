@@ -6,6 +6,7 @@ clearTerminal();
 
 require('dotenv').config({ path: '../.env'});
 
+// ChatGPT helped
 process.stdin.on('data', (data) => {
   let enteredValue = data.toString().slice(0, -1);
   clearLastLine();
@@ -23,15 +24,20 @@ process.stdin.on('data', (data) => {
   }
 
   if(enteredValue === 'help'){
-    console.log(`'chrm' - - - - - - - - - - -  Kills script to change rooms. `);
-    console.log(`'socket' * * * * * * * * * *  See your socket info`);
-    console.log(`'x-- <namespace>'  - - - - -  Namespaces: home, trivia, math.`);
-    console.log('                              to enter namespace after');
-    console.log('                              server initiation.');
-    console.log('                              CAUTION: space after dash is');
-    console.log('                              crucial.');
-    console.log(`'m, <message>' * * * * * * *  CHAT in after entering namespace.`);
-    console.log(`'rm- <roomName>' - - - - - -  RoomName of your choosing.`);
+    console.log(`
+    'chrm' - - - - - - - - - - -  Kills script to change rooms. 
+    'x-- <namespace>'  - - - - -  Namespaces: home, trivia, math.
+                                  to enter namespace after
+    'socket' - - - - - - - - - -  Socket info after room selection
+                                  server initiation.
+                                  CAUTION: space after dash is
+                                  crucial.
+    'm, <message>' - - - - - - -  CHAT in after entering namespace.
+    'rm- <roomName>' - - - - - -  RoomName of your choosing.
+    'mr, <message>' - - - - - - -  CHAT in after entering namespace.
+    'lr' - - - - - - - - - - - -  Leave current room.
+    'hi' - - - - - - - - - - - -  Validation Test in namespace
+    'clear'  - - - - - - - - - -  Clears terminal`);
 
   }
   
@@ -40,27 +46,29 @@ process.stdin.on('data', (data) => {
 
 console.log('Welcome to Quiz Master! Good luck in your endeavors!');
 
-function logNumbers() {
-  let i = 3;
-  const interval = setInterval(() => {
-    if (i === 1) {
-      console.log(`${i}...`);
-      clearInterval(interval);
-      setTimeout(() => {
-        clearTerminal();
-        console.log('START');
-      }, 1000);
-    } else {
-      console.log(`${i}...`);
-      i--;
-    }
-  }, 1000);
-}
+// ChatGPT helped
+
+// function logNumbers() {
+//   let i = 3;
+//   const interval = setInterval(() => {
+//     if (i === 1) {
+//       console.log(`${i}...`);
+//       clearInterval(interval);
+//       setTimeout(() => {
+//         clearTerminal();
+//         console.log('START');
+//       }, 1000);
+//     } else {
+//       console.log(`${i}...`);
+//       i--;
+//     }
+//   }, 1000);
+// }
 
 
 console.log('Right-aligned text'.padStart(62));
 
-
+// ChatGPT helped
 function restartWithDifferentValue(namespace) {
   // Perform any cleanup or reset operations here
   
@@ -74,17 +82,16 @@ function restartWithDifferentValue(namespace) {
   require('./client.js');
 }
 
+// ChatGPT helped
 function clearTerminal() {
   if (process.stdout.isTTY) {
     process.stdout.write('\x1B[2J\x1B[0f');
   }
 }
 
+// ChatGPT helped
 function clearLastLine() {
   process.stdout.write('\x1B[1A\x1B[2K');
 }
 
 
-// set up a way to adjust screen size
-
-// a way to limit room sizes
