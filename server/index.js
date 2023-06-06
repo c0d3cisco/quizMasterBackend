@@ -65,7 +65,7 @@ process.stdin.on('data', data => {
   }
 
   if(enteredValue === 'ql'){
-    console.info(messageQueue.data?.home);
+    console.info(messageQueue.data.home);
     console.table(messageQueue);
     // console.table(messageQueue.data?.home);
   }
